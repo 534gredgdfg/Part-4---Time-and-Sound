@@ -55,7 +55,7 @@ namespace Part_4___Time_and_Sound
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            // TODO: Add your update logic heree
             mouseState = Mouse.GetState();
 
             seconds = (float)gameTime.TotalGameTime.TotalSeconds - startTime;
