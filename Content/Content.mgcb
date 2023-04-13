@@ -25,7 +25,7 @@
 /processorParam:TextureFormat=Color
 /build:bomb.png
 
-#begin explosionImage.png
+#begin explosion-effect.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -35,7 +35,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:explosionImage.png
+/build:explosion-effect.png
 
 #begin File.spritefont
 /importer:FontDescriptionImporter
@@ -49,4 +49,16 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:X:/My Drive/Downloads/explosion.wav;explosion.wav
+
+#begin X:/My Drive/Downloads/explosionImage.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:X:/My Drive/Downloads/explosionImage.png;explosionImage.png
 

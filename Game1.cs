@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Reflection.PortableExecutable;
 
 namespace Part_4___Time_and_Sound
 {
@@ -13,9 +15,11 @@ namespace Part_4___Time_and_Sound
         
         Texture2D bombTexture, explosionImageTexture;
         Rectangle bombRect, explosionImageRect;
-
+        Vector2 explosionVector;
         float seconds;
         float startTime;
+        bool dedonated;
+        
 
         MouseState mouseState;
 
@@ -34,8 +38,11 @@ namespace Part_4___Time_and_Sound
             _graphics.PreferredBackBufferHeight = 500; // Sets the height of the window
             _graphics.ApplyChanges(); // Applies the new dimensions
 
+
+            explosionVector = new Vector2(1, 1);
+
             bombRect = new Rectangle(50, 50, 700, 400);
-            explosionImageRect = new Rectangle(100, 100, 600, 300);
+            explosionImageRect = new Rectangle(50, 50, 700, 400);
             base.Initialize();
         }
 
@@ -46,7 +53,7 @@ namespace Part_4___Time_and_Sound
             timeText = Content.Load<SpriteFont>("text");
             
             bombTexture = Content.Load<Texture2D>("bomb");
-            explosionImageTexture = Content.Load<Texture2D>("explosionImage");
+            explosionImageTexture = Content.Load<Texture2D>("explosion-effect");
             explode = Content.Load<SoundEffect>("explosion");
         }
 
@@ -58,15 +65,34 @@ namespace Part_4___Time_and_Sound
             // TODO: Add your update logic heree
             mouseState = Mouse.GetState();
 
+            
+
             seconds = (float)gameTime.TotalGameTime.TotalSeconds - startTime;
             if (mouseState.LeftButton == ButtonState.Pressed)
                 startTime = (float)gameTime.TotalGameTime.TotalSeconds;
 
-            if (seconds == 10)
+            if (seconds >=10)
             {
                 explode.Play();
-                startTime = (float)gameTime.TotalGameTime.TotalSeconds;                                             
+                startTime = (float)gameTime.TotalGameTime.TotalSeconds;
+                dedonated = true;
             }
+
+            
+            if (dedonated == true)
+            {
+                explosionImageRect.Y -= (int)explosionVector.Y;
+                explosionImageRect.X -= (int)explosionVector.X;
+                explosionImageRect.Height += 1;
+                explosionImageRect.Width += 1;
+
+                if (explode.Duration)
+                {
+                    System.Environment.Exit(0);
+                }
+                
+            }
+                
 
             base.Update(gameTime);
         }
@@ -77,14 +103,14 @@ namespace Part_4___Time_and_Sound
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            _spriteBatch.Draw(bombTexture, bombRect, Color.White);
-            _spriteBatch.DrawString(timeText, seconds.ToString("00.0"), new Vector2(270, 200), Color.Black);
-            if (seconds >= 10)
+                                 
+            if (dedonated == true)           
+                _spriteBatch.Draw(explosionImageTexture, explosionImageRect, Color.WhiteSmoke);
+            else
             {
-                _spriteBatch.Draw(explosionImageTexture, explosionImageRect, Color.White);
-                
+                _spriteBatch.Draw(bombTexture, bombRect, Color.White);
+                _spriteBatch.DrawString(timeText, seconds.ToString("00.0"), new Vector2(270, 200), Color.Black);
             }
-              
 
             _spriteBatch.End();
             base.Draw(gameTime);
