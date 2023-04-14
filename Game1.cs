@@ -99,6 +99,7 @@ namespace Part_4___Time_and_Sound
 
         protected override void Draw(GameTime gameTime)
         {
+            
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
@@ -109,7 +110,7 @@ namespace Part_4___Time_and_Sound
             else
             {
                 _spriteBatch.Draw(bombTexture, bombRect, Color.White);
-                _spriteBatch.DrawString(timeText, seconds.ToString("00.0"), new Vector2(280, 180), Color.Black);
+                _spriteBatch.DrawString(timeText, (10-seconds).ToString("00.0"), new Vector2(280, 180), Color.Black);
             }
 
             _spriteBatch.End();
