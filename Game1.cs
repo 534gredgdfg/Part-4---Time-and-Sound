@@ -24,6 +24,7 @@ namespace Part_4___Time_and_Sound
         MouseState mouseState;
 
         SoundEffect explode;
+        SoundEffectInstance explodeInstance;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -55,7 +56,8 @@ namespace Part_4___Time_and_Sound
             bombTexture = Content.Load<Texture2D>("bomb");
             explosionImageTexture = Content.Load<Texture2D>("explosion-effect");
             explode = Content.Load<SoundEffect>("explosion");
-        }
+            explodeInstance = explode.CreateInstance();
+        }   
 
         protected override void Update(GameTime gameTime)
         {
@@ -71,9 +73,9 @@ namespace Part_4___Time_and_Sound
             if (mouseState.LeftButton == ButtonState.Pressed)
                 startTime = (float)gameTime.TotalGameTime.TotalSeconds;
 
-            if (seconds >=10)
+            if (seconds >=10 && dedonated == false)
             {
-                explode.Play();
+                explodeInstance.Play();
                 startTime = (float)gameTime.TotalGameTime.TotalSeconds;
                 dedonated = true;
             }
@@ -85,14 +87,12 @@ namespace Part_4___Time_and_Sound
                 explosionImageRect.X -= (int)explosionVector.X;
                 explosionImageRect.Height += 1;
                 explosionImageRect.Width += 1;
-
-                if (explode.Duration)
-                {
+                if (explodeInstance.State == SoundState.Stopped)
                     System.Environment.Exit(0);
-                }
-                
             }
-                
+
+            
+
 
             base.Update(gameTime);
         }
@@ -109,7 +109,7 @@ namespace Part_4___Time_and_Sound
             else
             {
                 _spriteBatch.Draw(bombTexture, bombRect, Color.White);
-                _spriteBatch.DrawString(timeText, seconds.ToString("00.0"), new Vector2(270, 200), Color.Black);
+                _spriteBatch.DrawString(timeText, seconds.ToString("00.0"), new Vector2(280, 180), Color.Black);
             }
 
             _spriteBatch.End();
